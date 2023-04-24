@@ -1,0 +1,5 @@
+if (a>=b) {a=b+3.0;}
+if (a>=b) {a=b+3..0;}
+switch (a) {case 5: func("555"); break;}
+int pool2 = g || 9 && u+2;
+switch (a) {case 5: func("555
