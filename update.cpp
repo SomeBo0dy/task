@@ -10,7 +10,7 @@
 #include <queue>
 #include <utility>
 #include <iomanip>
-
+#include <codecvt>
 using namespace std;
 
 std::string& trim(std::string&);
@@ -166,7 +166,7 @@ public:
         while (getline(in_grammar, line)) {
             int i = 0;
             string left = "";//左部
-            for (i = 0; line[i] != '→' && i < line.size(); i++)
+            for (i = 0; line[i] != '_' && i < line.size(); i++)
             {
                 left += line[i];
             }
@@ -174,11 +174,11 @@ public:
             NT.push_back(left);
             string right = line.substr(i + 1, line.size() - 1);
             right = trim(right);
+            //cout << left << " → " << right << endl;
             addProduction(left, right);
         }
         addT();
         S = *NT.begin();
-        
         in_grammar.close();
 
     }
@@ -188,14 +188,15 @@ public:
         string pRight = "";
         for (int i = 0; i < right.size(); i++)
         {
-            if (right[i] == '|' || right[i] == '#')
+            if (right[i] == '|'&&right[i+1] !='|'&&right[i-1]!='|' || right[i] == '#')
             {
+                pRight = trim(pRight);
                 production[left].push_back(pRight);
                 pRight = "";
             }
             else
             {
-                pRight + right[i];
+                pRight += right[i];
             }
         }
     }
@@ -252,21 +253,18 @@ public:
 
 
 int main() {
-    string input_file = "C:\\Users\\97908\\Desktop\\E1\\input.txt";
-    string output_file = "C:\\Users\\97908\\Desktop\\E1\\output.txt";
-    string grammar_file = "C:\\Users\\97908\\Desktop\\grammar.txt";
+    string input_file = "C:\\Users\\97908\\Desktop\\task\\input.txt";
+    string output_file = "C:\\Users\\97908\\Desktop\\task\\output.txt";
+    string grammar_file = "C:\\Users\\97908\\Desktop\\task\\grammar.txt";
     lex(input_file, output_file);
     LR1 grammar(grammar_file);
     map<string, vector<string>> p = grammar.get();
     for (map<string, vector<string>>::iterator it = p.begin();
         it != p.end(); it++) {
-//        for (vector<string>::iterator s = it->second.begin();
- //           s != it->second.end(); s++) {
-        //
-          //  printf("%s → %s\n", it->first, s);
-        //}
-        printf("%s → \n", it->first);
-
+        for (int i = 0; i < it->second.size(); i++)
+        {
+            cout << it->first << "->" << it->second[i] << endl;
+        }
     }
 
 }
