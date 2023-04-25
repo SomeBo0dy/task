@@ -134,6 +134,8 @@ void scan(string s);
 
 void lex(string input_file, string output_file);
 
+
+
 class LR1 {
 private:
     int number = 0;
@@ -152,6 +154,7 @@ private:
 public:
     LR1(string grammar_file) {
         readGrammar(grammar_file);
+        broadeningGrammar();
     }
     map<string, vector<string>> get() {
         return production;
@@ -180,7 +183,13 @@ public:
         addT();
         S = *NT.begin();
         in_grammar.close();
-
+    }
+    //拓广文法
+    void broadeningGrammar() {
+        string newS = S + "'";
+        NT.insert(NT.begin(), newS);
+        production[newS].push_back(S);
+        S = newS;
     }
     //产生式
     void addProduction(string left, string right) {
