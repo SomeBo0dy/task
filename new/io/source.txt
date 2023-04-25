@@ -1,0 +1,22 @@
+{
+    int a;
+    float b;
+    char c;
+    int[5] d;
+    a = 3;
+    b = a - 5;
+    c = 48;
+    d[0] = a + b;
+    if (a >= d[0] && b < c || a < 0 && c > 5 ) {
+        a = c * b - 5;
+        while (a > 0) {
+            a = a - 5;
+            if (a == 5) break;
+        }
+    } else {
+        do {
+            c = c - 1;
+        } while (c > 40)
+    }
+    a = b * c * (a + b) - 5;
+}
